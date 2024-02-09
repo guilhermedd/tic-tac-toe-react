@@ -1,4 +1,5 @@
 import './App.css';
+import './index.css';
 import Square from "./components/Square";
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
@@ -22,21 +23,25 @@ function Board() {
         [0, 4, 8],
         [2, 4, 6],
       ];
+
       for(let i = 0; i < lines.length; i++) {
+        console.log("func", squares);
         const [a, b, c] = lines[i];
         if (squares[a] && squares[a] === squares[b] && squares[a] === squares[c]) {
           setStatus('Winner: ' + squares[a]);
           return squares[a];
         }
       }
+      if (!squares.includes(null)) {
+        setStatus('Draw');
+        return 'Draw';
+      }
       return null;
     }
     function handleClick(i) {
-      const newSquares = squares.slice();
+      const newSquares = [...squares];
 
-      console.log(winner)
-      if (newSquares[i] && winner !== null) {
-        console.log(squares)
+      if (newSquares[i] || winner) {
         return;
       }
 
@@ -45,33 +50,41 @@ function Board() {
       setStatus('Next player: ' + nextValue);
       newSquares[i] = value;
       setSquares(newSquares);
+      console.log(newSquares);
 
-      setWinner(calculateWinner(squares))
+      setWinner(calculateWinner(newSquares))
+      if (winner) {
+        setStatus('Winner: ' + winner);
+      }
     }
 
     return (
       <>
         <Container className="board ">
-          <h1>{status}</h1>
           <Row className="justify-content-center">
-            <Col md="auto">
-              <Square value={squares[0]} onSquareClick={() =>handleClick(0)}/>
-              <Square value={squares[1]} onSquareClick={() =>handleClick(1)}/>
-              <Square value={squares[2]} onSquareClick={() =>handleClick(2)}/>
+            <Col md="auto" className="status">
+              <h1>{status}</h1>
             </Col>
           </Row>
           <Row className="justify-content-center">
             <Col md="auto">
-              <Square value={squares[3]} onSquareClick={() =>handleClick(3)}/>
-              <Square value={squares[4]} onSquareClick={() =>handleClick(4)}/>
-              <Square value={squares[5]} onSquareClick={() =>handleClick(5)}/>
+              <Square value={squares[0]} onSquareClick={() => handleClick(0)}/>
+              <Square value={squares[1]} onSquareClick={() => handleClick(1)}/>
+              <Square value={squares[2]} onSquareClick={() => handleClick(2)}/>
             </Col>
           </Row>
           <Row className="justify-content-center">
             <Col md="auto">
-              <Square value={squares[6]} onSquareClick={() =>handleClick(6)}/>
-              <Square value={squares[7]} onSquareClick={() =>handleClick(7)}/>
-              <Square value={squares[8]} onSquareClick={() =>handleClick(8)}/>
+              <Square value={squares[3]} onSquareClick={() => handleClick(3)}/>
+              <Square value={squares[4]} onSquareClick={() => handleClick(4)}/>
+              <Square value={squares[5]} onSquareClick={() => handleClick(5)}/>
+            </Col>
+          </Row>
+          <Row className="justify-content-center">
+            <Col md="auto">
+              <Square value={squares[6]} onSquareClick={() => handleClick(6)}/>
+              <Square value={squares[7]} onSquareClick={() => handleClick(7)}/>
+              <Square value={squares[8]} onSquareClick={() => handleClick(8)}/>
             </Col>
           </Row>
         </Container>
