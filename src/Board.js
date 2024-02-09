@@ -8,20 +8,51 @@ import { useState } from 'react';
 function Board() {
     const [value, setValue] = useState('X');
     const [squares, setSquares] = useState(Array(9).fill(null));
+    const [status, setStatus] = useState('Next player: ' + value);
+    const [winner, setWinner] = useState(null);
 
+    function calculateWinner(squares) {
+      const lines = [
+        [0, 1, 2],
+        [3, 4, 5],
+        [6, 7, 8],
+        [0, 3, 6],
+        [1, 4, 7],
+        [2, 5, 8],
+        [0, 4, 8],
+        [2, 4, 6],
+      ];
+      for(let i = 0; i < lines.length; i++) {
+        const [a, b, c] = lines[i];
+        if (squares[a] && squares[a] === squares[b] && squares[a] === squares[c]) {
+          setStatus('Winner: ' + squares[a]);
+          return squares[a];
+        }
+      }
+      return null;
+    }
     function handleClick(i) {
       const newSquares = squares.slice();
-      if (newSquares[i]) {
+
+      console.log(winner)
+      if (newSquares[i] && winner !== null) {
+        console.log(squares)
         return;
       }
+
       setValue((value !== 'X') ? 'X' : 'O');
+      const nextValue = value === 'X' ? 'O' : 'X';
+      setStatus('Next player: ' + nextValue);
       newSquares[i] = value;
       setSquares(newSquares);
+
+      setWinner(calculateWinner(squares))
     }
 
     return (
       <>
         <Container className="board ">
+          <h1>{status}</h1>
           <Row className="justify-content-center">
             <Col md="auto">
               <Square value={squares[0]} onSquareClick={() =>handleClick(0)}/>
