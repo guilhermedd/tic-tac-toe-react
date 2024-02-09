@@ -13,10 +13,17 @@ code {
 }
 
 .board {
-  margin-top:15vh;
+  margin-top:40vh;
 }
 
+/* Adicione o seguinte estilo para remover margens e preenchimento padrão do botão */
 .square {
   width: 100px;
-  height: 100px;
+  height: 100%;
+  border: 1px solid black;
+  justify-content: center;
+  align-items: center;
+  font-size: 50px;
+  margin: 0; /* Remova margens */
+  padding: 0; /* Remova preenchimento */
 }

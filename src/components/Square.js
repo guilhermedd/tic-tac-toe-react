@@ -1,19 +1,12 @@
 import '../App.css';
 import '../index.css';
-import { useState } from 'react';
-export default function Square({index}) {
-  function handleClick(value) {
-    console.log(value);
-  }
-
-  const [value, setValue] = useState(null);
-
+export default function Square({ value, onSquareClick }) {
   return (
     <button
       className="square"
-      onClick={(() => handleClick(index))}
+      onClick={onSquareClick}
     >
-      {index}
+      {value}
     </button>
   );
 }
