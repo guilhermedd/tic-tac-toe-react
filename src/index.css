@@ -12,7 +12,7 @@ code {
     monospace;
 }
 
-.board {
+.main {
   margin-top:30vh;
 }
 
@@ -29,6 +29,10 @@ code {
 }
 
 .status {
-  align-items: center;
-  padding-bottom: 20px;
+  justify-content: center;
+  padding-top: 20px;
+}
+
+.board {
+  justify-content: end;
 }

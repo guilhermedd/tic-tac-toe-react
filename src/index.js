@@ -4,6 +4,9 @@ import './index.css';
 import Board from './Board';
 import reportWebVitals from './reportWebVitals';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import Container from "react-bootstrap/Container";
+import Col from "react-bootstrap/Col";
+import Row from "react-bootstrap/Row";
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
