@@ -11,7 +11,8 @@ function Board() {
     const [squares, setSquares] = useState(Array(9).fill(null));
     const [status, setStatus] = useState('Next player: ' + value);
     const [winner, setWinner] = useState(null);
-    const [board, setBoard] = useState([]);
+    const [board, setBoard] = useState([[...squares, status]]);
+    const [currentStatus, setCurrentStatus] = useState(0);
 
     const board_md = 6;
 
@@ -28,7 +29,6 @@ function Board() {
       ];
 
       for(let i = 0; i < lines.length; i++) {
-        console.log("func", squares);
         const [a, b, c] = lines[i];
         if (squares[a] && squares[a] === squares[b] && squares[a] === squares[c]) {
           setStatus('Winner: ' + squares[a]);
@@ -53,7 +53,6 @@ function Board() {
       setStatus('Next player: ' + nextValue);
       newSquares[i] = value;
       setSquares(newSquares);
-      console.log(newSquares);
 
       setWinner(calculateWinner(newSquares))
       if (winner) {
@@ -61,9 +60,20 @@ function Board() {
       }
 
       const history = [...board];
-      history.push(newSquares);
+      history.push([newSquares, status]);
       setBoard(history);
+      setCurrentStatus(currentStatus + 1);
 
+    }
+
+    function goBack(history, index) {
+      const currentStatus = history.pop();
+      setStatus(currentStatus);
+      setValue(currentStatus[currentStatus.length - 1]);
+
+      const currentBoard = [...history];
+      setSquares(currentBoard)
+      setCurrentStatus(index)
     }
 
     return (
@@ -98,7 +108,7 @@ function Board() {
 
             <Col md={12-board_md} className="justify-content-start">
               {board.map((item, index) => (
-                <ul><button onClick={() => setSquares(item)}>Voltar para jogada {index}</button></ul>
+                <ul><button onClick={() => goBack(item, index)}>Voltar para jogada {index}</button></ul>
               ))}
             </Col>
           </Row>
